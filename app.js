@@ -1,4 +1,5 @@
 let listaDeNumerosSorteados = [];
+let numeroLimite = 10;
 let numeroSecreto = gerarNumeroAleatorio();
 let tentativas = 1;
 let titulo = document.querySelector('h1');
@@ -15,7 +16,10 @@ function exibirTextoNaTela(tag, texto){
 }
 
 function gerarNumeroAleatorio(){
-    numeroEscolhido = parseInt(Math.random() * 10 + 1);
+    numeroEscolhido = parseInt(Math.random() * numeroLimite + 1);
+    if (listaDeNumerosSorteados.length == numeroLimite){
+        listaDeNumerosSorteados = [];
+    }
     if (listaDeNumerosSorteados.includes(numeroEscolhido)){
         return gerarNumeroAleatorio();
     }else {
@@ -25,20 +29,20 @@ function gerarNumeroAleatorio(){
 }
 
 function limparCampo(){
-    document.querySelector('input').value = ''
+    document.querySelector('input').value = '';
 }
 
 function finalizarJogo(){
-    limparCampo()
-    document.getElementById('reiniciar').removeAttribute('disabled') // A função getElementById busca no HTML por um ID referênciado e a função removeAttribute remove o atributo relacionado a aquele id.
+    limparCampo();
+    document.getElementById('reiniciar').removeAttribute('disabled'); // A função getElementById busca no HTML por um ID referênciado e a função removeAttribute remove o atributo relacionado a aquele id.
     document.getElementById('chute').setAttribute('disabled', true);
 }
 
 function reiniciarJogo(){
-    numeroSecreto = gerarNumeroAleatorio()
-    limparCampo()
-    tentativas = 1
-    exibirMensagemInicial()
+    numeroSecreto = gerarNumeroAleatorio();
+    limparCampo();
+    tentativas = 1;
+    exibirMensagemInicial();
     document.getElementById('chute').removeAttribute('disabled');
     document.getElementById('reiniciar').setAttribute('disabled', true);
 }
@@ -58,5 +62,5 @@ function verificarChute(){
         exibirTextoNaTela('p', `O número secreto é maior que ${chute}!`);
     }
     tentativas++;
-    limparCampo()
+    limparCampo();
 }
